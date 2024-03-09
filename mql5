@@ -1,0 +1,111 @@
+mql5
+//+------------------------------------------------------------------+
+//|                  Mona Lisa Expert Advisor                        |
+//|              Developed by Forex Robot Easy Team                  |
+//|            Visit us at forexroboteasy.com                        |
+//+------------------------------------------------------------------+
+
+// Input parameters
+input double LotSize = 0.1;                       // Lot size for each trade
+input int StopLoss = 50;                           // Stop loss value in pips
+input int TakeProfit = 100;                        // Take profit value in pips
+input double RiskPercentage = 2.0;                 // Risk percentage per trade
+
+// Global variables
+double AccountBalance;
+double RiskAmount;
+double EntryPrice;
+double StopLossPrice;
+double TakeProfitPrice;
+
+// Initialization function
+void OnInit()
+{
+    AccountBalance = AccountInfoDouble(ACCOUNT_BALANCE);
+    RiskAmount = AccountBalance * RiskPercentage / 100.0;
+}
+
+// Start function
+void OnStart()
+{
+    if (IsRolloverPeriod())
+    {
+        if (IsChannelLow())
+        {
+            CalculateEntryAndExitPoints();
+            PlacePendingOrders();
+        }
+    }
+}
+
+// Check if it is Rollover period
+bool IsRolloverPeriod()
+{
+    // Add logic to check Rollover period
+}
+
+// Check if market volatility is low
+bool IsChannelLow()
+{
+    // Add logic to check market volatility using Bollinger Bands and ATR
+}
+
+// Calculate entry and exit points
+void CalculateEntryAndExitPoints()
+{
+    // Add logic to calculate entry and exit points
+    EntryPrice = ...;
+    StopLossPrice = ...;
+    TakeProfitPrice = ...;
+}
+
+// Place pending orders
+void PlacePendingOrders()
+{
+    // Add logic to place pending Limit orders
+    int ticket = OrderSend(Symbol(), OP_BUYLIMIT, LotSize, EntryPrice, 0, StopLossPrice, TakeProfitPrice, 'Mona Lisa EA', 0, 0, Green);
+    if (ticket > 0)
+    {
+        if (OrderSelect(ticket, SELECT_BY_TICKET))
+        {
+            if (OrderSend(Symbol(), OP_SELLLIMIT, LotSize, EntryPrice, 0, StopLossPrice, TakeProfitPrice, 'Mona Lisa EA', 0, 0, Red))
+            {
+                // Orders placed successfully
+            }
+            else
+            {
+                // Error placing sell limit order
+            }
+        }
+        else
+        {
+            // Error selecting buy limit order
+        }
+    }
+    else
+    {
+        // Error placing buy limit order
+    }
+}
+
+// Handle trade execution and errors
+void OnTrade()
+{
+    // Add logic to handle trade execution and errors
+}
+
+// Handle trade events
+void OnTradeEvent(const MqlTradeTransaction& trans)
+{
+    // Add logic to handle trade events
+}
+
+// Handle errors
+void OnError(const int errorCode)
+{
+    // Add logic to handle errors
+}
+
+//+------------------------------------------------------------------+
+//|                      End of Program                              |
+//+------------------------------------------------------------------+
